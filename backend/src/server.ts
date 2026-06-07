@@ -1,16 +1,24 @@
-import express from "express";
+import { app } from "./app.js";
+import { pool } from "./database/connection.js";
+import { env } from "./config/env.js";
 
-const app = express();
+async function startServer() {
+  try {
+    await pool.query("SELECT NOW()");
 
-app.use(express.json());
+    console.log("✅ PostgreSQL conectado");
 
-app.get("/", (req, res) => {
-  res.json({
-    projeto: "ChamaVolante",
-    status: "Online"
-  });
-});
+    app.listen(env.PORT, () => {
+      console.log(
+        `🚀 Servidor rodando em http://localhost:${env.PORT}`
+      );
+    });
+  } catch (error) {
+    console.error("❌ Erro ao conectar ao PostgreSQL");
+    console.error(error);
 
-app.listen(3000, () => {
-  console.log("Servidor rodando na porta 3000");
-});
+    process.exit(1);
+  }
+}
+
+startServer();
