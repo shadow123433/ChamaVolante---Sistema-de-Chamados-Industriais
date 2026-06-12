@@ -28,7 +28,7 @@ export class ChamadoService {
       SELECT *
       FROM chamados
       WHERE status = 'ABERTO'
-      ORDER BY criado_em DESC
+      ORDER BY created_at DESC
       `
     );
 
@@ -40,7 +40,7 @@ export class ChamadoService {
       `
       SELECT *
       FROM chamados
-      ORDER BY criado_em DESC
+      ORDER BY created_at DESC
       `
     );
 
